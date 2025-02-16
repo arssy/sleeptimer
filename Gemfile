@@ -55,3 +55,8 @@ group :development, :test do
   gem 'factory_bot_rails', '~> 6.4.4'
   gem 'faker', '~> 3.5.1'
 end
+
+# Gemfile
+group :test do
+  gem 'shoulda-matchers', '~> 6.4'
+end
