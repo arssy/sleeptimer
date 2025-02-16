@@ -50,4 +50,7 @@ group :development, :test do
 
   # Test framework
   gem 'rspec-rails', '~> 7.1.1'
+
+  # Test data
+  gem 'factory_bot_rails', '~> 6.4.4'
 end
