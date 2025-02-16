@@ -10,13 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_16_182756) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_16_190438) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "sleep_histories", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "sleep_time", precision: nil
+    t.datetime "wake_up_time", precision: nil
+    t.integer "sleep_duration"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sleep_histories_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name", limit: 100
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "sleep_histories", "users"
 end
