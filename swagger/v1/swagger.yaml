@@ -1,0 +1,26 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/users/{id}":
+    get:
+      summary: Retrieves a user
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        example: 1
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: User found
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:9913
