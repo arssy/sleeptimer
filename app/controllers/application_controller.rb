@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::API
+  include JsonapiResponse
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   def not_found(exception)
