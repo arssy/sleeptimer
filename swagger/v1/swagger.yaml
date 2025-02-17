@@ -59,6 +59,31 @@ paths:
           description: Not found
         '404':
           description: Not found
+  "/api/v1/users/{id}/follow/{following_id}":
+    post:
+      summary: Follow
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        example: 1
+        required: true
+        schema:
+          type: integer
+      - name: following_id
+        in: path
+        example: 2
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
 servers:
 - url: http://{defaultHost}
   variables:

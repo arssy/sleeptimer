@@ -1,7 +1,7 @@
 module Api
   module V1
     class UsersController < BaseController
-      before_action :set_user, only: %i[show fall_asleep wake_up]
+      before_action :set_user, only: %i[show fall_asleep wake_up follow]
 
       def show
         render jsonapi: @user, include: :sleep_histories, class: {User: UserSerializer, SleepHistory: SleepHistorySerializer}
@@ -24,6 +24,18 @@ module Api
           render jsonapi: sleep_history, class: {SleepHistory: SleepHistorySerializer}
         else
           render jsonapi_errors: sleep_history.errors, status: :unprocessable_entity
+        end
+      end
+
+      def follow
+        following_user = User.find(params[:following_id])
+        following = @user.followings.find_or_initialize_by(following_id: params[:following_id])
+        error_response(:bad_request, "You're already following this user") and return unless following.new_record?
+        
+        if following.save
+          render jsonapi: following, class: {Follower: FollowerSerializer}
+        else
+          render jsonapi_errors: following.errors, status: :unprocessable_entity
         end
       end
 

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
         member do 
           post :fall_asleep
           post :wake_up
+          post "follow/:following_id", to: "users#follow", as: :follow
         end
       end
     end
