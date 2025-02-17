@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_16_190438) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_17_055124) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "followers", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "following_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["following_id"], name: "index_followers_on_following_id"
+    t.index ["user_id"], name: "index_followers_on_user_id"
+  end
 
   create_table "sleep_histories", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -30,5 +39,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_16_190438) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "followers", "users"
+  add_foreign_key "followers", "users", column: "following_id"
   add_foreign_key "sleep_histories", "users"
 end

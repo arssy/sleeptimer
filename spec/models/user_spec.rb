@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   describe 'associations' do
     it { should have_many(:sleep_histories) }
+    it { should have_many(:followers) }
+    it { should have_many(:followings) }
   end
 
   describe '.fall_asleep?' do 
