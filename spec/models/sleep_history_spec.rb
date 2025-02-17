@@ -30,6 +30,26 @@ RSpec.describe SleepHistory, type: :model do
         end
       end
     end
+
+    describe 'update sleep history' do
+      let!(:user) { create(:user) }
+      let(:sleep_history) { create(:sleep_history, :active, user: user) }
+      
+      it 'should update updated_at' do 
+        sleep_history.update(wake_up_time: Time.zone.now)
+        expect(sleep_history.updated_at).not_to eq(sleep_history.created_at)
+      end
+
+      it 'should update wake_up_time' do 
+        sleep_history.update(wake_up_time: Time.zone.now)
+        expect(sleep_history.wake_up_time).not_to be_nil
+      end
+
+      it 'should update sleep_duration' do 
+        sleep_history.update(wake_up_time: Time.zone.now)
+        expect(sleep_history.sleep_duration).not_to be_nil
+      end
+    end
   end
 
   # Test suite for scopes

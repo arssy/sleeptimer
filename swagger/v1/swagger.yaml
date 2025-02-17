@@ -40,6 +40,25 @@ paths:
           description: Not found
         '422':
           description: Unprocessable entity
+  "/api/v1/users/{id}/wake_up":
+    post:
+      summary: Wake up
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        example: 1
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Not found
+        '404':
+          description: Not found
 servers:
 - url: http://{defaultHost}
   variables:
