@@ -8,7 +8,9 @@ RSpec.describe 'API V1 - User', type: :request do
       parameter name: :id, in: :path, type: :integer, example: 1, required: true
 
       response '200', 'User found' do
-        let(:id) { create(:user).id }
+        let(:user) { create(:user) }
+        let(:sleep_history) { create(:sleep_history, user: user) }
+        let(:id) { user.id }
         run_test!
       end
 

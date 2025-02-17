@@ -73,7 +73,7 @@ paths:
         '200':
           description: OK
         '400':
-          description: Not found
+          description: Bad request
         '404':
           description: Not found
   "/api/v1/users/{id}/follow/{following_id}":
