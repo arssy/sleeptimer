@@ -5,6 +5,8 @@ module Api
       attributes :sleep_time, :wake_up_time, :sleep_duration
       
       attribute :formatted_duration do 
+        next nil unless @object.sleep_duration.present?
+
         hours = @object.sleep_duration / 3600
         minutes = (@object.sleep_duration % 3600) / 60
         seconds = (@object.sleep_duration % 3600) % 60
