@@ -100,4 +100,37 @@ RSpec.describe 'API V1 - User', type: :request do
       end
     end
   end
+
+  path '/api/v1/users/{id}/unfollow/{following_id}' do
+    post 'Unfollow' do
+      tags 'Users'
+      produces 'application/json'
+      parameter name: :id, in: :path, type: :integer, example: 1, required: true
+      parameter name: :following_id, in: :path, type: :integer, example: 2, required: true
+
+      let(:user) { create(:user) }
+      let(:following) { create(:user) }
+      let(:another_user) { create(:user) }
+      let(:id) { user.id }
+      let(:following_id) { following.id }
+
+      before do 
+        post "/api/v1/users/#{user.id}/follow/#{following.id}"
+      end
+
+      response '204', 'No Content' do
+        run_test!
+      end
+
+      response '400', 'Bad request' do
+        let(:following_id) { another_user.id }
+        run_test!
+      end
+
+      response '404', 'Not found' do
+        let(:following_id) { 99 }
+        run_test!
+      end
+    end
+  end
 end

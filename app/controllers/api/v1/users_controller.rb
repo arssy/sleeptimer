@@ -1,7 +1,7 @@
 module Api
   module V1
     class UsersController < BaseController
-      before_action :set_user, only: %i[show fall_asleep wake_up follow]
+      before_action :set_user, only: %i[show fall_asleep wake_up follow unfollow]
 
       def show
         render jsonapi: @user, include: :sleep_histories, class: {User: UserSerializer, SleepHistory: SleepHistorySerializer}
@@ -34,6 +34,18 @@ module Api
         
         if following.save
           render jsonapi: following, class: {Follower: FollowerSerializer}
+        else
+          render jsonapi_errors: following.errors, status: :unprocessable_entity
+        end
+      end
+
+      def unfollow
+        following_user = User.find(params[:following_id])
+        following = @user.followings.find_by(following_id: params[:following_id])
+        error_response(:bad_request, "You're not following this user") and return unless following.present?
+        
+        if following.destroy
+          head :no_content
         else
           render jsonapi_errors: following.errors, status: :unprocessable_entity
         end

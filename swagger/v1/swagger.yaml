@@ -84,6 +84,31 @@ paths:
           description: Bad request
         '404':
           description: Not found
+  "/api/v1/users/{id}/unfollow/{following_id}":
+    post:
+      summary: Unfollow
+      tags:
+      - Users
+      parameters:
+      - name: id
+        in: path
+        example: 1
+        required: true
+        schema:
+          type: integer
+      - name: following_id
+        in: path
+        example: 2
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
 servers:
 - url: http://{defaultHost}
   variables:
