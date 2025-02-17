@@ -1,7 +1,7 @@
 module Api
   module V1
     class UsersController < BaseController
-      before_action :set_user, only: %i[show fall_asleep wake_up follow unfollow]
+      before_action :set_user, only: %i[show fall_asleep wake_up follow unfollow following_sleep_histories]
 
       def show
         render jsonapi: @user, include: :sleep_histories, class: {User: UserSerializer, SleepHistory: SleepHistorySerializer}
@@ -49,6 +49,11 @@ module Api
         else
           render jsonapi_errors: following.errors, status: :unprocessable_entity
         end
+      end
+
+      def following_sleep_histories
+        sleep_histories = @user.following_sleep_histories
+        render jsonapi: sleep_histories, class: {User: SleepHistorySerializer}
       end
 
       private

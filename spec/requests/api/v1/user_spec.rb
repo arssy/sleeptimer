@@ -19,6 +19,24 @@ RSpec.describe 'API V1 - User', type: :request do
     end
   end
 
+  path '/api/v1/users/{id}/following_sleep_histories' do
+    get 'Retrieves sleep histories from user followed by current user' do
+      tags 'Users'
+      produces 'application/json'
+      parameter name: :id, in: :path, type: :integer, example: 1, required: true
+
+      response '200', 'OK' do
+        let(:id) { create(:user).id }
+        run_test!
+      end
+
+      response '404', 'Not found' do
+        let(:id) { 999 }
+        run_test!
+      end
+    end
+  end
+
   path '/api/v1/users/{id}/fall_asleep' do
     post 'Fall asleep' do
       tags 'Users'

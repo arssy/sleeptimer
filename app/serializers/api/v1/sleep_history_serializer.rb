@@ -12,6 +12,10 @@ module Api
         seconds = (@object.sleep_duration % 3600) % 60
         format("%02d:%02d:%02d", hours, minutes, seconds)
       end
+
+      attribute :name do
+        @object.try(:name)
+      end
     end
   end
 end

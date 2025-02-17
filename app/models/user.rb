@@ -10,4 +10,11 @@ class User < ApplicationRecord
   def fall_asleep?
     sleep_histories.active.exists?
   end
+
+  def following_sleep_histories
+    user_followings.select("sleep_histories.*, users.name")
+                   .joins(:sleep_histories)
+                   .where("sleep_histories.created_at >= ?", 1.week.ago.beginning_of_week)
+                   .order("sleep_histories.sleep_duration ASC")
+  end
 end

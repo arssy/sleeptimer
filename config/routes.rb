@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     namespace :v1 do 
       resources :users, only: %i[show] do 
         member do 
+          get :following_sleep_histories
           post :fall_asleep
           post :wake_up
           post "follow/:following_id", to: "users#follow", as: :follow
