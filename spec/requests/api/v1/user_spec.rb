@@ -43,8 +43,10 @@ RSpec.describe 'API V1 - User', type: :request do
       produces 'application/json'
       parameter name: :id, in: :path, type: :integer, example: 1, required: true
 
+      let!(:user) { create(:user) }
+      let(:id) { user.id }
+      
       response '201', 'Sleep history created' do
-        let(:id) { create(:user).id }
         run_test!
       end
 
@@ -54,9 +56,7 @@ RSpec.describe 'API V1 - User', type: :request do
       end
 
       response '422', 'Unprocessable entity' do
-        let!(:user) { create(:user) }
         let!(:sleep_history) { create(:sleep_history, :active, user: user) }
-        let(:id) { user.id }
         run_test!
       end
     end
@@ -68,17 +68,16 @@ RSpec.describe 'API V1 - User', type: :request do
       produces 'application/json'
       parameter name: :id, in: :path, type: :integer, example: 1, required: true
 
+      let!(:user) { create(:user) }
+      let(:id) { user.id }
+
       response '200', 'OK' do
-        let!(:user) { create(:user) }
         let!(:sleep_history) { create(:sleep_history, :active, user: user) }
-        let(:id) { user.id }
         run_test!
       end
 
-      response '400', 'Not found' do
-        let!(:user) { create(:user) }
+      response '400', 'Bad request' do
         let!(:sleep_history) { create(:sleep_history, user: user) }
-        let(:id) { user.id }
         run_test!
       end
 
@@ -96,23 +95,21 @@ RSpec.describe 'API V1 - User', type: :request do
       parameter name: :id, in: :path, type: :integer, example: 1, required: true
       parameter name: :following_id, in: :path, type: :integer, example: 2, required: true
 
+      let(:user) { create(:user) }
+      let(:following) { create(:user) }
+      let(:id) { user.id }
+      let(:following_id) { following.id }
+
       response '200', 'OK' do
-        let(:id) { create(:user).id }
-        let(:following_id) { create(:user).id }
         run_test!
       end
 
       response '400', 'Bad request' do
-        let(:user) { create(:user) }
-        let(:following) { create(:user) }
         let!(:follower) { create(:follower, user: user, following: following) }
-        let(:id) { user.id }
-        let(:following_id) { following.id }
         run_test!
       end
 
       response '404', 'Not found' do
-        let(:id) { create(:user).id }
         let(:following_id) { 999 }
         run_test!
       end
