@@ -5,7 +5,7 @@
 # Generate users
 
 ActiveRecord::Base.transaction do 
-  users = FactoryBot.create_list(:user, 2)
+  users = FactoryBot.create_list(:user, 50)
   user_ids = users.pluck(:id)
   dates = (Time.zone.now.beginning_of_month.to_date..Time.zone.now.to_date)
 
